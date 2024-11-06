@@ -1,0 +1,36 @@
+Theory: The Linux command is Linux utility. The commands are executed on the Linux terminal. Maximum tasks can be done by executing commands. The terminal is a command-line interface to interact with the operating system, and is case-sensitive. 
+Linux provides a powerful command-line interface compared to other operating systems such as Windows and MacOS. We can do basic work and advanced work through its terminal. We
+can do some basic tasks such as creating a file, deleting a file, moving a file, and more. In addition, we can also perform advanced tasks such as administrative tasks (including package installation,  user management), networking tasks (ssh connection), security tasks, and many more. 
+Linux terminal is a user-friendly terminal as it provides various support options. To open the Linux  terminal, press "CTRL + ALT + T" keys together, and execute a command by pressing the 'ENTER' key
+
+Test Meaning
+-s file 	Non empty file
+-f file 	Is File exist or normal file and not a directory
+-d dir  	Is Directory exist and not a file
+-w file 	Is writeable file
+
+
+
+-r file Is read-only file 
+-x file Is file is executable 
+
+
+Sample Commands: 'cd' 
+'ls' 
+'cp' 
+‘mkdir’ 
+‘mv’ 
+‘rm’ 
+‘more’,’less’ 
+‘man’ 
+‘touch’ 
+‘cat’ 
+‘sort’ 
+‘sed’ 
+‘who’ 
+‘pwd’ 
+‘ps’ 
+‘chmod’ 
+‘cut’
+
+

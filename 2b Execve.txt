@@ -1,0 +1,21 @@
+Theory: 
+exec() system call: 
+The exec() system call is used after a fork() system call by one of the two processes to replace the memory  space with a new program. The exec() system call loads a binary file into memory (destroying image of  the program containing the exec() system call) and go their separate ways. Within the exec family there are functions that vary slightly in their capabilities. 
+exec family: 
+1.	execl() and execlp(): 
+execl(): It permits us to pass a list of command line arguments to the program to be executed. The list of arguments is terminated by NULL. 
+e.g.  execl("/bin/ls", "ls", "-l", NULL); 
+
+execlp(): It does same job except that it will use environment variable PATH to determine which executable to process. Thus a fully qualified path name would not have to be used. The function execlp() can also take the fully qualified name as it also resolves explicitly.
+e.g. execlp("ls", "ls", "-l", NULL); 
+
+2.	execv() and execvp(): 
+execv(): It does same job as execl() except that command line arguments can be passed  to it inthe form of an array of pointers to string. 
+e.g. char *argv[] = ("ls", "-l",  NULL);execv("/bin/ls", argv); 
+execvp(): It does same job expect that it will use environment variable PATH to  determinewhich executable to process. Thus a fully qualified path name would not  have to be used. 
+e.g. execvp("ls", argv); 
+
+3.	execve( ): 
+eg: int execve(const char *filename, char *const argv[ ], char *const envp[ ]); 
+It executes the program pointed to by filename. filename must be either a binary executable, or a  script starting with a line of the form: argv is an array of argument strings passed to the new  program. By convention, the first of these strings should contain the filename associated with the file being executed. envp is an array of strings, conventionally of the form key=value, which are passed as environment to the new program. Both argv and envp must be terminated by a NULL  pointer. The argument vector and environment can be accessed by the called program's main function, when it is  defined as:int main(int argc, char *argv[ ] , char *envp[ ])] execve() does not return on success, and the text, data, bss, and stack of the calling  process are overwritten by that of the program loaded. 
+Sample Code: 
