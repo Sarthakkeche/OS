@@ -1,0 +1,35 @@
+Shared memory is one of the three interprocess communication (IPC) mechanisms available under Linux and other Unix-like systems. The other two IPC mechanisms are the message queues and semaphores. In case of shared memory, a shared memory segment is created by the kernel and mapped to the data segment of the address space of a requesting process. A process can use the shared memory just like any other global variable in its address space. 
+The shared memory mechanism avoids copying overhead. The first process simply writes data into the shared memory segment. As soon as it is written, the data becomes available to the second process. Shared memory is the fastest mechanism for interprocess communication. 
+System V Shared Memory Calls 
+4.1 shmget 
+#include <sys/ipc.h> 
+#include <sys/shm.h> 
+int shmget (key_t key, size_t size, int shmflg);
+
+As the name suggests, shmget gets you a shared memory segment associated with the given key. 
+The key is obtained earlier using the ftok function. If there is no existing shared memory segment corresponding to the given key and IPC_CREAT flag is specified in shmflg, a new shared memory segment  is created. Also, the key value could be IPC_PRIVATE, in which case a new shared memory segment is  created. size specifies the size of the shared memory segment to be created; it is rounded up to a multiple  of PAGE_SIZE. If shmflg has IPC_CREAT | IPC_EXCL specified and a shared memory segmentfor the given key exists, shmget fails and returns -1, with errno set to EEXIST. The last nine bits of shmflg specify  the permissions granted to owner, group and others. The execute permissions are not used. If shmget succeeds, a shared memory identifier is returned. On error, -1 is returned and errno isset to the relevant  error. It means the shared memory segment should be attached with read only access. 
+
+
+
+
+
+4.2 shmat 
+#include <sys/types.h> 
+#include <sys/shm.h> 
+void *shmat (int shmid, const void *shmaddr, int shmflg);
+
+With shmat, the calling process can attach the shared memory segment identified by shmid. The process can specify the address at which the shared memory segment should be attached with shmaddr. However,  in most cases, we do not care at what address system attaches the shared memory segment and shmaddr  can conveniently be specified as NULL. shmflg specifies the flags for attaching the shared memory segment. If shmaddr is not null and SHM_RND is specified in shmflg, the shared memory segment is attached at  address rounded down to the nearest multiple of SHMLBA, where SHMLBA stands for Segment  low boundary address. The idea is to attach at an address which is a multiple of SHMLBA. On most Linux  systems, SHMLBA is the same as PAGE_SIZE. Another flag is SHM_RDONLY, On success, shmat returns pointer to the attached shared memory segment. On error, (void *) -1 is returned, with errno set to the cause of the error. 
+
+4.3 shmdt 
+#include <sys/types.h> 
+#include <sys/shm.h> 
+int shmdt (const void *shmaddr); 
+shmdt detaches a shared memory segment from the address space of the calling process. shmaddr is the address at which the shared memory segment was attached, being the value returned by anearlier  shmat call. On success, shmdt returns 0. On error, shmdt returns -1 and errno is set to indicate the reason of error. 
+
+4.4 shmctl 
+#include <sys/ipc.h> 
+#include <sys/shm.h> 
+int shmctl (int shmid, int cmd, struct shmid_ds *buf); 
+
+The shmctl call is for control operations of a System V shared memory segment identified by the shmid identifier, returned by an earlier shmget call. The data structure for shared memory segments in the kernel. The cmd parameter in shmctl specifies the command. The important commands are IPC_STAT, IPC_SET and IPC_RMID. The IPC_STAT command copiesthe data in the kernel data structure  shmid_ds for the shared memory into the location pointed by the parameter buf. With the IPC_SET  command, we can set some of the fields in the shmid_ds structure in the kernel for the shared memory  segment. The fields that can be modified are shm_perm.uid, shm_perm.gid and the least significant 9 bits of shm_perm.mode. The command, IPC_RMID, marks a shared memory segment for removal from the  system. The shared memory segment is actually removed after the last process detaches it from its 
+address space.
