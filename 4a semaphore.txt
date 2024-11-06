@@ -1,0 +1,9 @@
+Theory: 
+The producer and consumer share a fixed-size buffer used as a queue. The producer’s job is to  generate data and put this in the buffer. The consumer’s job is to consume the data from this buffer,  one at a time. 
+How do you make sure that producer doesn’t try to put data in buffer when the buffer is full and consumer doesn’t try to consumer data when the buffer is empty? 
+When producer tries to put data into the buffer when it is full, it wastes cpu cycles. The same is true for consumer it tries to consumer from an empty buffer. It’s better that they go on sleep in these cases  so that the scheduler can schedule another process. 
+
+Implementation: 
+Use two semaphores, one for buffer full, and one for buffer empty as a buffer index. Each time a producer queues an element into buffer, the producer posts to the empty buffer semaphore. This will increment its value, and if it were 0 it would wake up consumer threads waiting on that semaphore. The consumer thread that waits on that semaphore, upon waking up it will decrement the value of the semaphore. So empty buffer semaphore basically follows up with the buffer index. 
+The full buffer semaphore does the opposite. Consumer threads post to it when they dequeue from the buffer, which increments the semaphore value. And producer threads wait in them, which means they sleep if buffer is full, and decrement the semaphore value each time they add element to buffer. 
+A mutex is used to protect access to buffer. The producer is to either go to sleep or discard data if the buffer is full. The next time the consumer removes an item from the buffer, it notifies the producer, who starts to fill the buffer again. In the same manner, the consumer can go to sleep if it finds the buffer to be empty. The next time the producer puts data into the buffer, it wakes up the sleeping consumer. 

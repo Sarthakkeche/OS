@@ -1,0 +1,38 @@
+Theory: 
+CPU Scheduling is a process of determining which process will own CPU for execution while another process is on hold. The main task of CPU scheduling is to make sure that whenever the CPU remains idle, the OS at least select one of the processes available in the ready queue for execution. 
+Important algorithms 
+1. First Come First Serve (FCFS) 
+2. Shortest-Job-First (SJF) Scheduling 
+3. Shortest Remaining Time 
+4. Priority Scheduling 
+5. Round Robin Scheduling 
+6. Multilevel Queue Scheduling 
+Shortest Job First (Preemptive) : 
+In shortest job first scheduling algorithm, the processor selects the waiting process with the smallest execution time to execute next. In Preemptive SJF Scheduling, jobs are put into the ready queue as they come. A process with shortest burst time begins execution. If a process with even a shorter burst time arrives, the current process is removed or preempted from execution, and the shorter job is allocated CPU cycle. 
+
+Advantages 
+• SJF is frequently used for long term scheduling. 
+• It reduces the average waiting time over FIFO (First in First Out) algorithm. 
+• SJF method gives the lowest average waiting time for a specific set of processes.
+• It is appropriate for the jobs running in batch, where run times are known in advance. 
+• For the batch system of long-term scheduling, a burst time estimate can be obtained from      the job description.
+• For Short-Term Scheduling, we need to predict the value of the next burst time. 
+• Probably optimal with regard to average turnaround time. 
+Disadvantages 
+• SJF can’t be implemented for CPU scheduling for the short term. It is because there is no specific method to predict the length of the upcoming CPU burst. 
+• This algorithm may cause very long turnaround times or starvation. 
+• Requires knowledge of how long a process or job will run. 
+
+Round Robin Algorithm: 
+A round-robin is a CPU scheduling algorithm that shares equal portions of resources in circular orders to each process and handles all processes without prioritization. In the round-robin, each process gets a fixed time interval of the slice to utilize the resources or execute its task called time quantum or time slice. Some of the round-robin processes are pre-empted if it executed in a given time slot, while the rest of the processes go back to the ready queue and wait to run in a circular order with the scheduled time slot until they complete their task. It removes the starvation for each process to achieve CPU scheduling by proper partitioning of the CPU. It is a pre-emptive algorithm. It shares an equal time interval between all processes to complete their task. It is a starvation free CPU scheduling algorithm. Hence it is known as the fairest and simple algorithm 
+Advantages 
+1. It does not face any starvation issues or convoy effect. 
+2. Each process gets equal priority to the fair allocation of CPU. 
+3. It is easy to implement the CPU Scheduling algorithm. 
+4. Each new process is added to the end of the ready queue as the next process's arrival time is reached. 
+5. Each process is executed in circular order that shares a fixed time slot or quantum. 
+6. Every process gets an opportunity in the round-robin scheduling algorithm to reschedule after a given quantum period. 
+Disadvantage 
+1. If the time quantum is lower, it takes more time on context switching between the processes.
+2. It does not provide any special priority to execute the most important process. 
+3. The waiting time of a large process is higher due to the short time slot.

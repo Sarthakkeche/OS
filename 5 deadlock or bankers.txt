@@ -1,0 +1,6 @@
+Theory: 
+The banker’s algorithm is a resource allocation and deadlock avoidance algorithm that tests for safety by simulating the allocation for predetermined maximum possible amounts of all resources, then makes an “s-state” check to test for possible activities, before deciding whether allocation should be allowed to continue. 
+Let ‘n’ be the number of processes in the system and ‘m’ be the number of resources types. Available: A vector of length m. It shows number of available resources of each type. If Available[i] = k, then k instances of resource Ri are available. 
+Max: An n×m matrix that contain maximum demand of each process. If Max[i,j] = k, then process Pi can request maximum k instances of resource type Rj. 
+Allocation: An n×m matrix that contain number of resources of each type currently allocated to each process. If Allocation[i,j] = k, then Pi is currently allocated k instances of resource type Rj. Need: An n×m matrix that shows the remaining resource need of each process. If Need[i,j] = k, then process Pi may need k more instances of resource type Rj to complete the task. 
+Need [ i, j ] = Max [ i, j ] – Allocation [ i, j ]. 
